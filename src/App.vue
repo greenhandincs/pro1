@@ -15,6 +15,8 @@ export default {
 }
 </script>
 
-<style lang="less">
-
+<style>
+button {
+  cursor: pointer;
+}
 </style>
