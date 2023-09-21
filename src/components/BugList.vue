@@ -6,7 +6,8 @@
                 <th>Bug描述</th>
                 <th>操作</th>
             </tr>
-            <BugItem v-for="bug in bugs" :key="bug.id" :bug="bug" :solveBugCallBack="solveBugCallBack" :delBugCallBack="delBugCallBack" :changeCheckAllStautsCallBack="changeCheckAllStautsCallBack"></BugItem>
+            <BugItem v-for="bug in bugs" :key="bug.id" :bug="bug" :solveBugCallBack="solveBugCallBack"
+                :delBugCallBack="delBugCallBack" :changeCheckAllStautsCallBack="changeCheckAllStautsCallBack"></BugItem>
             <!-- <BugItem bug-detail="XXXX"></BugItem>
             <BugItem bug-detail="XXXX"></BugItem> -->
         </table>
@@ -16,29 +17,44 @@
 <script>
 import BugItem from './BugItem.vue';
 export default {
-    components: { BugItem },    
+    components: { BugItem },
     props: ['bugs', 'solveBugCallBack', 'delBugCallBack', 'checkAllCallBack'],
     data() {
         return {
             isCheckAll: false
         }
     },
+    updated() {
+        let flag = true;     
+        let n = this.bugs.length
+        if(n == 0) {
+            this.isCheckAll = false;
+            return;
+        }   
+        for(let i = 0; i < this.bugs.length; i++) {
+            if(!this.bugs[i].checked){
+                flag = false;
+                break;
+            }
+        }
+        this.isCheckAll = flag;
+    },
     methods: {
         checkAll() {
-            this.checkAllCallBack(this.isCheckAll)            
+            this.checkAllCallBack(this.isCheckAll)
         },
         changeCheckAllStautsCallBack(status) {
             // console.log('status' + preStatus);
-            if(!status && this.isCheckAll) { //原来被选中，现取消选中
+            if (!status && this.isCheckAll) { //原来被选中，现取消选中
                 this.isCheckAll = false;
-            } else if(status) { //原来没选，现在选中了
+            } else if (status) { //原来没选，现在选中了
                 let flag = true;
                 this.bugs.forEach(bug => {
-                    if(!bug.checked)
+                    if (!bug.checked)
                         flag = false;
                 })
                 this.isCheckAll = flag;
-            }            
+            }
         }
     }
 
@@ -59,14 +75,15 @@ table {
 
 th,
 td {
-    
+
     border: 1px solid #ebebeb;
 }
 
 tr {
     height: 40px;
 }
+
 tr:nth-child(even) {
     background-color: #f2f4f7;
-  }
+}
 </style>

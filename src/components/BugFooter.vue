@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <button>清除已解决</button>
+    <button @click="cleanSolvedBugs">清除已解决</button>
     <span>当前Bug总量{{ bug_total }}个，已解决{{ bug_solved }}个</span>
   </div>
 </template>
@@ -16,7 +16,16 @@ export default {
       type: Number,
       default: 0
     },
-  }
+    cleanSolvedBugsCallBack: {
+      type: Function
+    }
+  },
+  methods: {
+    cleanSolvedBugs() {
+      if(confirm('确定清除所有已解决bug吗？'))
+        this.cleanSolvedBugsCallBack();
+    }
+  },
 
 }
 </script>
