@@ -1,16 +1,30 @@
 <template>
     <div>
         <div class="text">
-            <textarea placeholder="请输入BUG描述信息" rows="5" cols="50"> </textarea>
+            <textarea placeholder="请输入BUG描述信息" rows="5" cols="50" v-model="bugDetail"> </textarea>
         </div>
         <div class="btn">
-            <button>提交</button>
+            <button @click="submit">提交</button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            bugDetail: ''
+        }
+    },    
+    props: ['saveBugsCallBack'],
+    methods: {
+        submit() {            
+            if(!this.bugDetail.trim()) return
+            const bug = {detail: this.bugDetail}
+            this.saveBugsCallBack(bug)
+            this.bugDetail = ''
+        }
+    }
 
 }
 </script>

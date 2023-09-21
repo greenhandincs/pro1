@@ -1,14 +1,19 @@
 <template>
     <tr>
-        <td class="tb-select"><input type="checkbox"></td>
-        <td class="tb-info">{{ bugDetail }}</td>
+        <td class="tb-select"><input type="checkbox" @change="handleChecked" :checked="bug.checked"></td>
+        <td class="tb-info">{{ bug.detail }}</td>
         <td class="tb-del"><button>删除</button></td>
     </tr>
 </template>
 
 <script>
 export default {
-    props: ['bugDetail']
+    props: ['bug', 'solveBugCallBack'],
+    methods: {
+        handleChecked(){
+            this.solveBugCallBack(this.bug.id)
+        }
+    }
 }
 </script>
 

@@ -6,9 +6,9 @@
                 <th>Bug描述</th>
                 <th>操作</th>
             </tr>
-            <BugItem bug-detail="XXXX"></BugItem>
-            <BugItem bug-detail="XXXX"></BugItem>
-            <BugItem bug-detail="XXXX"></BugItem>
+            <BugItem v-for="bug in bugs" :key="bug.id" :bug="bug" :solveBugCallBack="solveBugCallBack"></BugItem>
+            <!-- <BugItem bug-detail="XXXX"></BugItem>
+            <BugItem bug-detail="XXXX"></BugItem> -->
         </table>
     </div>
 </template>
@@ -16,8 +16,8 @@
 <script>
 import BugItem from './BugItem.vue';
 export default {
-    components: { BugItem },
-    comments: { BugItem }
+    components: { BugItem },    
+    props: ['bugs', 'solveBugCallBack']    
 
 }
 </script>
