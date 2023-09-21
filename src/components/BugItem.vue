@@ -8,16 +8,14 @@
 
 <script>
 export default {
-    props: ['bug', 'solveBugCallBack', 'delBugCallBack', 'changeCheckAllStautsCallBack'],
+    props: ['bug', 'solveBugCallBack', 'delBugCallBack'],
     methods: {
         handleChecked(){            
-            this.solveBugCallBack(this.bug.id)            
-            this.changeCheckAllStautsCallBack(this.bug.checked)
+            this.solveBugCallBack(this.bug.id)                        
         },
         delBug() {
             if(confirm('确定要删除Bug吗')) {
-                this.delBugCallBack(this.bug.id)
-                this.changeCheckAllStautsCallBack(true)
+                this.delBugCallBack(this.bug.id)                
 
             }
         }
