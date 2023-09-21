@@ -2,16 +2,24 @@
     <tr>
         <td class="tb-select"><input type="checkbox" @change="handleChecked" :checked="bug.checked"></td>
         <td class="tb-info">{{ bug.detail }}</td>
-        <td class="tb-del"><button>删除</button></td>
+        <td class="tb-del"><button @click="delBug">删除</button></td>
     </tr>
 </template>
 
 <script>
 export default {
-    props: ['bug', 'solveBugCallBack'],
+    props: ['bug', 'solveBugCallBack', 'delBugCallBack', 'changeCheckAllStautsCallBack'],
     methods: {
-        handleChecked(){
-            this.solveBugCallBack(this.bug.id)
+        handleChecked(){            
+            this.solveBugCallBack(this.bug.id)            
+            this.changeCheckAllStautsCallBack(this.bug.checked)
+        },
+        delBug() {
+            if(confirm('确定要删除Bug吗')) {
+                this.delBugCallBack(this.bug.id)
+                this.changeCheckAllStautsCallBack(true)
+
+            }
         }
     }
 }

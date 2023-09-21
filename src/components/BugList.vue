@@ -2,11 +2,11 @@
     <div id="bug-list">
         <table>
             <tr>
-                <th>全选<input type="checkbox"></th>
+                <th>全选<input type="checkbox" @change="checkAll" v-model="isCheckAll"></th>
                 <th>Bug描述</th>
                 <th>操作</th>
             </tr>
-            <BugItem v-for="bug in bugs" :key="bug.id" :bug="bug" :solveBugCallBack="solveBugCallBack"></BugItem>
+            <BugItem v-for="bug in bugs" :key="bug.id" :bug="bug" :solveBugCallBack="solveBugCallBack" :delBugCallBack="delBugCallBack" :changeCheckAllStautsCallBack="changeCheckAllStautsCallBack"></BugItem>
             <!-- <BugItem bug-detail="XXXX"></BugItem>
             <BugItem bug-detail="XXXX"></BugItem> -->
         </table>
@@ -17,7 +17,30 @@
 import BugItem from './BugItem.vue';
 export default {
     components: { BugItem },    
-    props: ['bugs', 'solveBugCallBack']    
+    props: ['bugs', 'solveBugCallBack', 'delBugCallBack', 'checkAllCallBack'],
+    data() {
+        return {
+            isCheckAll: false
+        }
+    },
+    methods: {
+        checkAll() {
+            this.checkAllCallBack(this.isCheckAll)            
+        },
+        changeCheckAllStautsCallBack(status) {
+            // console.log('status' + preStatus);
+            if(!status && this.isCheckAll) { //原来被选中，现取消选中
+                this.isCheckAll = false;
+            } else if(status) { //原来没选，现在选中了
+                let flag = true;
+                this.bugs.forEach(bug => {
+                    if(!bug.checked)
+                        flag = false;
+                })
+                this.isCheckAll = flag;
+            }            
+        }
+    }
 
 }
 </script>
